@@ -1,0 +1,18 @@
+保存静态资源
+
+springboot 静态资源映射规则：
+1./webjars/**,都去classpath:/META_INF/resource/wejars
+wejars: 以jar包的方式引入静态资源
+
+2./* 本地静态资源 文件夹
+classpath:/META-INF/resources/
+classpath:/reources/
+classpath:/static/
+classpath:/public/
+/://项目根目录
+
+3.欢迎页，静态资源文件下的所有 **/index.html页面
+
+4.网站图标 **/favicon.ico
+
+//******配置spring.resources.static-location = xxx后，映射失效*******

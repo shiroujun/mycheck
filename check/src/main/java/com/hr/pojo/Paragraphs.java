@@ -2,6 +2,7 @@ package com.hr.pojo;
 
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 段落
@@ -50,19 +51,22 @@ public class Paragraphs {
         return "Paragraphs{" +
                 "sentences=" + sentences +
                 ", similarit=" + similarit +
+                ", length_of_paragraphs=" + length_of_paragraphs +
                 '}';
     }
 
     public Paragraphs cacluate() {
         for (Sentence sentence : sentences) {
-            final String rawSentence = sentence.getRawSentence();
-            length_of_paragraphs += rawSentence.length();
+            length_of_paragraphs += sentence.getLength_of_sentence();
         }
 
-        for (Sentence sentence : sentences) {
+       /* for (Sentence sentence : sentences) {
             //获取权重
-            similarit += sentence.getRawSentence().length() * 1.0 / length_of_paragraphs * sentence.getSimilarit();
-        }
+            similarit = similarit + sentence.getLength_of_sentence() * 1.0 / length_of_paragraphs * sentence.getSimilarit();
+        }*/
+
+        Optional<Double> reduce = sentences.stream().map(e -> e.getLength_of_sentence() * 1.0 / length_of_paragraphs * e.getSimilarit()).reduce(Double::sum);
+        similarit = reduce.get().intValue();
         return this;
     }
 }

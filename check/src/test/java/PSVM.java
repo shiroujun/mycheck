@@ -1,3 +1,4 @@
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -47,17 +48,17 @@ public class PSVM {
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         //2.输入一个网址
-        HttpGet httpGet = new HttpGet("https://www.baidu.com/");
+        HttpGet httpGet = new HttpGet("http://www.baidu.com/link?url=EVeegQT628na2FwSj2N7SbDpk-nLMpRVVwzdPmN2DQIowlIlDjTP0viGF5K1CTC7dyv71NyFnQv4KmTSFZUAqa");
 
         //3.回车发起请求(把网址放入client对象中) 并获取响应对象CloseableHttpResponse
         CloseableHttpResponse response = httpClient.execute(httpGet);
 
         //4.解析响应获取数据
-        if (response.getStatusLine().getStatusCode() == 200) {
+        if (response.getStatusLine().getStatusCode() == 307) {
             //如果响应成功
-            HttpEntity httpEntity = response.getEntity();
-            String content = EntityUtils.toString(httpEntity, "utf-8");
-            System.out.println(content);
+            Header[] locations = response.getHeaders("Location");
+            System.out.println("=============================");
+            System.out.println(locations);
         }
     }
 
@@ -170,6 +171,26 @@ public class PSVM {
 
         //关闭response
         //httpclient 不能关闭
+    }
+
+    @Test
+    public void t(){
+        System.out.println("”“帅有什么用啊，我还是一个单身狗”，网友听完直接笑喷".replaceAll("[\\pP‘’“”]", "").length());
+        System.out.println("”“帅有什么用啊，我还是一个单身狗”，网友听完直接笑喷".replaceAll("[\\pP‘’“”]", ""));
+    }
+
+    @Test
+    public  void tes(){
+
+        int s =0;
+        for (int i = 0; i < 2; i++) {
+            if (i==0){
+                s+=28*1.0/62*100;
+            }else {
+                s+=34*1.0/62*100;
+            }
+        }
+        System.out.println(s);
     }
 
 }

@@ -1,7 +1,11 @@
 package com.hr.pojo;
 
 
+import com.jayway.jsonpath.internal.function.numeric.Sum;
+
+import javax.lang.model.element.VariableElement;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 文章
@@ -45,20 +49,22 @@ public class Phase {
     @Override
     public String toString() {
         return "Phase{" +
-                "paragraphs=" + paragraphs +
+                "length_of_phase=" + length_of_phase +
+                ", paragraphs=" + paragraphs +
                 ", similarit=" + similarit +
                 '}';
     }
 
     public Phase cacluate() {
         for (Paragraphs paragraphs : paragraphs) {
-            length_of_phase = paragraphs.getLength_of_paragraphs();
+            length_of_phase += paragraphs.getLength_of_paragraphs();
         }
 
-        for (Paragraphs paragraphs : paragraphs) {
-            //获取权重
-            similarit += (paragraphs.getLength_of_paragraphs() * 1.0 / length_of_phase) * paragraphs.getSimilarit();
-        }
+        Optional<Double> reduce = paragraphs.stream().map(e -> {
+            return e.getLength_of_paragraphs() * 1.0 / length_of_phase * e.getSimilarit();
+        }).reduce(Double::sum);
+
+        similarit = reduce.get().intValue();
         return this;
     }
 }
